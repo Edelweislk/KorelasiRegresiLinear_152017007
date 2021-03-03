@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
 style.use("ggplot")
-keuntungan = [7000000, 10000000, 7500000, 5000000, 17000000, 7000000, 14000000]
-laba = [3000000, 4000000, 2000000, 1200000, 5000000, 2000000, 5000000]
+jam = [20, 12, 9, 10, 7, 11]
+suhu = [39, 47, 55, 54, 57, 50]
 
 def linearRegresion(data):
 	'''
@@ -36,7 +36,8 @@ def linearRegresion(data):
 	b = ((n*jmlhxy)-(jmlhx*jmlhy))/(n*jmlhx2-(jmlhx**2))
 
 	return(a,b)
-	
+
+
 def gambarGrafik(dataProses):
 	a,b = linearRegresion(dataProses)
 	print("Nilai a adalah %.4f"%(a))
@@ -50,11 +51,11 @@ def gambarGrafik(dataProses):
 	plt.scatter(dataProses[0],dataProses[1],label='data aktual',s=10)
 	plt.plot(dataProses[0],f1(dataProses[0],a,b),c='k',label='hasil regresi without',linewidth=0.5)
 	plt.title("Hasil regresi Linear Sederhana")
-	plt.ylabel("laba")
-	plt.xlabel("keuntungan")
+	plt.ylabel("suhu")
+	plt.xlabel("jam")
 	plt.legend()
 	fig = plt.figure(1)
 	fig.canvas.set_window_title("regresi")
 	plt.show()
 
-gambarGrafik([keuntungan,laba])
+gambarGrafik([jam,suhu])
