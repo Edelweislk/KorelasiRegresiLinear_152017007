@@ -1,0 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import style
+style.use("ggplot")
+keuntungan = [7000000, 10000000, 7500000, 5000000, 17000000, 7000000, 14000000]
+laba = [3000000, 4000000, 2000000, 1200000, 5000000, 2000000, 5000000]
+
+def linearRegresion(data):
+	'''
+		indeks[0] -> response variable -> x
+		indeks[1] -> predictor variable -> y
+	'''
+	x2=[]
+	y2=[]
+	xy=[]
+	n = len(data[0])
+
+	for x in data[0]:
+		x2.append(x**2)
+
+	for y in data[0]:
+		y2.append(y**2)
+
+	i=0;
+	while(i<n):
+		dump = data[0][i]*data[1][i]
+		xy.append(dump)
+		i+=1
+	jmlhx = sum(data[0])
+	jmlhy = sum(data[1])
+	jmlhx2 = sum(x2)
+	jmlhy2 = sum(y2)
+	jmlhxy = sum(xy)
+
+	a = ((jmlhy*jmlhx2)-(jmlhx*jmlhxy))/(n*jmlhx2-(jmlhx**2))
+	b = ((n*jmlhxy)-(jmlhx*jmlhy))/(n*jmlhx2-(jmlhx**2))
+
+	return(a,b)
+	
+def gambarGrafik(dataProses):
+	a,b = linearRegresion(dataProses)
+	print("Nilai a adalah %.4f"%(a))
+	print("Nilai b adalah %.4f"%(b))
+	def f1(keanggotaan,a,b):
+		hit = []
+		for x in keanggotaan:
+			y = b*x+a
+			hit.append(y)
+		return(hit)
+	plt.scatter(dataProses[0],dataProses[1],label='data aktual',s=10)
+	plt.plot(dataProses[0],f1(dataProses[0],a,b),c='k',label='hasil regresi without',linewidth=0.5)
+	plt.title("Hasil regresi Linear Sederhana")
+	plt.ylabel("laba")
+	plt.xlabel("keuntungan")
+	plt.legend()
+	fig = plt.figure(1)
+	fig.canvas.set_window_title("regresi")
+	plt.show()
+
+gambarGrafik([keuntungan,laba])
